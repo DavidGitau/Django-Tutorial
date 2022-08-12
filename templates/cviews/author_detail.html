@@ -1,0 +1,14 @@
+{% extends 'cviews/base.html' %}
+{% block content %}
+<div class="container mb-3">
+    <h1>{{object.name}} {{title}}</h1>
+    <p>{{object.email}}</p>
+    {% comment %} <h6>{{object.last_accessed}}</h6> {% endcomment %}
+    <h2>All Authors</h2>
+    {% for p in authors %}
+    <li>{{p.name}}</li> 
+      
+    {% endfor %}
+</div>
+{% endblock content %}
+

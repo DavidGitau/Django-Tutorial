@@ -1,0 +1,9 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>FAVPAGE</h1>
+{% comment %} <div class="container"> {% endcomment %}
+    <!-- {{form|crispy}} -->
+    {% crispy form form.helper %}
+{% comment %} </div> {% endcomment %}
+{% endblock content %}

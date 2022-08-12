@@ -1,0 +1,14 @@
+{% extends 'cviews/base.html' %}
+{% block content %}
+<div class="container mb-3">
+    <h1>{{object.name}} {{title}}</h1>
+    <p>{{object.address}}</p>
+    <h6>{{object.last_accessed}}</h6>
+    <h2>All Publishers</h2>
+    {% for p in publishers %}
+    <li>{{p.name}}</li> 
+      
+    {% endfor %}
+</div>
+{% endblock content %}
+

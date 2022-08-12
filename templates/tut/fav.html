@@ -1,0 +1,12 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>FAVPAGE</h1>
+<div class="container">
+    <!-- {{form|crispy}} -->
+    {% for form in formset %}
+    {% crispy form form.helper %}
+    {% endfor %}
+    {% crispy form form.helper %}
+</div>
+{% endblock content %}

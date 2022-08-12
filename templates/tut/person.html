@@ -1,0 +1,11 @@
+{% extends 'tut/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Person Form</h1>
+<form method="post" class="container mb-3">
+    {% csrf_token %}
+    {{form| crispy}}
+    <input type="submit" value="save" name="save">
+</form>
+
+{% endblock content %}
