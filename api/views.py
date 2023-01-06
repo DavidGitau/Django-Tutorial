@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from api.serializers import AuthorSerializer
 from tut.models import Author
 from django.db.models import Q
+from api.filters import AuthorFilter
 
 
 class AuthorDetail(APIView):
@@ -22,7 +23,9 @@ class AuthorList(generics.ListAPIView):
     #     dt = Author.objects.all()
     #     data = AuthorSerializer(dt, many=True).data
     #     return Response(data)
+    model = Author
     serializer_class = AuthorSerializer
+    filterset_class = AuthorFilter
 
     def get_queryset(self):
         queryset = Author.objects.all()
