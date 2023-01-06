@@ -12,6 +12,7 @@ from tut.models import (
 appname = 'api'
 
 urlpatterns = [
+    path('post',PostView.as_view()),
     path('authors',AuthorList.as_view()),
     path('author/<int:pk>',AuthorDetail.as_view()),
     path(

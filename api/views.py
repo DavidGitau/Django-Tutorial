@@ -2,11 +2,13 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from api.serializers import AuthorSerializer
-from tut.models import Author
+from api.serializers import AuthorSerializer, BlogSerializer
+from tut.models import Author, Blog
 from django.db.models import Q
 from api.filters import AuthorFilter
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS, AllowAny
 
 class AuthorDetail(APIView):
     def get(self, request, pk):
@@ -38,8 +40,34 @@ class AuthorList(generics.ListAPIView):
 
 
 class CustomList(generics.ListCreateAPIView):
-    pass 
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated | BasePermission | AllowAny]
 
 
-class CustomDetail(generics.RetrieveDestroyAPIView):
-    pass 
+class CustomDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated | BasePermission | AllowAny]
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
+class PostView(APIView):
+    serializer_class = BlogSerializer
+    # permission_classes = []
+    # authentication_classes = []
+    # permission_classes = [IsAuthenticated]
+    # permission_classes = [BasePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated | BasePermission | AllowAny]
+
+    def post(self, request):
+        # if not self.request.session.exists(self.request.session.session_key):
+        #     self.request.session.create()
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            print('success')
+        return Response(request.data)
+
+    def get_queryset(self):
+        return Blog.objects.all()
